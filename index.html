@@ -13,8 +13,8 @@
           <th>Name</th>
           <th>Elo</th>
         </tr>
-        <tr v-for="{ rank, person, elo } in infos">
-          <td>{{ rank }}</td>
+        <tr v-for="({ person, elo }, rank) in infos">
+          <td>{{ rank + 1 }}</td>
           <td>{{ person }}</td>
           <td>{{ elo }}</td>
         </tr>
@@ -64,7 +64,7 @@
             }
 
             this.infos = Object.keys(people)
-              .map((person, rank) => ({ rank: rank + 1, person, elo: people[person] }))
+              .map(person => ({ person, elo: people[person] }))
               .sort((a, b) => b.elo - a.elo);
           });
       }
