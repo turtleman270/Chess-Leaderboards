@@ -5,8 +5,6 @@
   </head>
 
   <body>
-
-
   <table border = "1">
   <tr>
     <th>Rank</th>
@@ -22,15 +20,14 @@
   </body>
 
   <script>
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function(){
-
+    fetch('matches.txt')
+      .then(response => response.text())
+      .then(txt => {
         var people = [];
 
         //for (var name in hash) {
         //  sum += hash[name];
         //}
-        var txt = xmlhttp.responseText;
         var rawFile = txt.split("\n");
         for (var i = 1; i < rawFile.length-1; i++) {
           line = rawFile[i];
@@ -83,10 +80,7 @@
         document.getElementById("rank").innerHTML = rankOrder;
         document.getElementById("people").innerHTML = peopleOrder;
         document.getElementById("elo").innerHTML = eloOrder;
-
-    };
-    xmlhttp.open("GET","matches.txt",true);
-    xmlhttp.send();
+    });
 
   </script>
 </html>
