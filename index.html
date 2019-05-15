@@ -2,85 +2,72 @@
 <html>
   <head>
     <title>Hey, this was done by Anthony</title>
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
   </head>
 
   <body>
-  <table border = "1">
-  <tr>
-    <th>Rank</th>
-    <th>Name</th>
-    <th>Elo</th>
-  </tr>
-  <tr>
-    <td id="rank"></td>
-    <td id="people"></td>
-    <td id="elo"></td>
-  </tr>
-</table>
+    <div id="app">
+      <table border="1">
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Elo</th>
+        </tr>
+        <tr v-for="{ rank, person, elo } in infos">
+          <td>{{ rank }}</td>
+          <td>{{ person }}</td>
+          <td>{{ elo }}</td>
+        </tr>
+      </table>
+    </div>
   </body>
 
   <script>
-    fetch('matches.txt')
-      .then(response => response.text())
-      .then(txt => {
-        var people = [];
+    const app = new Vue({
+      el: '#app',
+      data: {
+        infos: []
+      },
+      methods: {
+      },
+      mounted: function() {
+        fetch('matches.txt')
+          .then(response => response.text())
+          .then(txt => {
+            const people = {};
+            const rawFile = txt.split("\n").slice(1);
+            for (var i = 1; i < rawFile.length-1; i++) {
+              line = rawFile[i];
+              match = line.split(",");
+              winner = match[0];
+              loser = match[1];
+              tie = match[2];
+              if(tie){
+                console.log("zzzzzzzzzzzzzzzzzzzz");
+              }
+              //add people to array if needed
+              if (!(winner in people)){
+                people[winner] = 1000;
+              }
+              if (!(loser in people)){
+                people[loser] = 1000;
+              }
+              expected = (1/(1+Math.pow(10,((people[winner]-people[loser])/400))))
+              if(tie){
+                expected-=0.5;
+              }
+              change = expected*20;
+              people[winner]=people[winner]+change
+              people[loser]=people[loser]-change
+              console.log(people[winner])
+              console.log(change)
+            }
 
-        //for (var name in hash) {
-        //  sum += hash[name];
-        //}
-        var rawFile = txt.split("\n");
-        for (var i = 1; i < rawFile.length-1; i++) {
-          line = rawFile[i];
-          match = line.split(",");
-          winner = match[0];
-          loser = match[1];
-          tie = match[2];
-          if(tie){
-            console.log("zzzzzzzzzzzzzzzzzzzz");
-          }
-          //add people to array if needed
-          if (!(winner in people)){
-            people[winner] = 1000;
-          }
-          if (!(loser in people)){
-            people[loser] = 1000;
-          }
-          expected = (1/(1+Math.pow(10,((people[winner]-people[loser])/400))))
-          if(tie){
-            expected-=0.5;
-          }
-          change = expected*20;
-          people[winner]=people[winner]+change
-          people[loser]=people[loser]-change
-          console.log(people[winner])
-          console.log(change)
-        }
-        var sortable = [];
-        for (var person in people) {
-          sortable.push([person, people[person]]);
-        }
-        sortable.sort(function(a, b) {
-          return b[1] - a[1];
-        });
-
-        var rankOrder = "";
-        var peopleOrder = "";
-        var eloOrder = "";
-        var rank = 0;
-        for(var person in sortable){
-          rank += 1
-          rankOrder = rankOrder + rank + "<br>";
-          peopleOrder = peopleOrder + sortable[person][0] + "<br>"
-          eloOrder = eloOrder + sortable[person][1] + "<br>"
-          console.log(person+" "+sortable[person])
-        }
-        console.log(peopleOrder)
-        console.log(eloOrder)
-
-        document.getElementById("rank").innerHTML = rankOrder;
-        document.getElementById("people").innerHTML = peopleOrder;
-        document.getElementById("elo").innerHTML = eloOrder;
+            this.infos = Object.keys(people)
+              .map((person, rank) => ({ rank: rank + 1, person, elo: people[person] }))
+              .sort((a, b) => b.elo - a.elo);
+          });
+      }
     });
-
   </script>
 </html>
