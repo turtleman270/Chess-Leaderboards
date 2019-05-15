@@ -1,0 +1,6 @@
+Winner,Loser,optionalIfTie
+Anthony,Mark
+Sheran,Anthony
+Sheran,Mark
+Mark,Don
+Don,Anthony,tie
