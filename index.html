@@ -35,7 +35,7 @@
           .then(response => response.text())
           .then(txt => {
             const people = {};
-            const rawFile = txt.split("\n").slice(1);
+            const rawFile = txt.split("\n");
             for (var i = 1; i < rawFile.length-1; i++) {
               line = rawFile[i];
               match = line.split(",");
