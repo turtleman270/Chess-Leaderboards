@@ -3,6 +3,8 @@
   <head>
     <title>Hey, this was done by Anthony</title>
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="src/eloCalculator.js" type="text/javascript"></script>
+
   </head>
 
   <body>
@@ -35,7 +37,7 @@
           .then(response => response.text())
           .then(txt => {
             const people = {};
-            const rawFile = txt.split("\n").slice(1);
+            const rawFile = txt.split("\n");
             for (var i = 1; i < rawFile.length-1; i++) {
               line = rawFile[i];
               match = line.split(",");
@@ -52,11 +54,8 @@
               if (!(loser in people)){
                 people[loser] = 1000;
               }
-              expected = (1/(1+Math.pow(10,((people[winner]-people[loser])/400))))
-              if(tie){
-                expected-=0.5;
-              }
-              change = expected*20;
+
+              change = eloCalc(people[winner],people[loser],tie)
               people[winner]=people[winner]+change
               people[loser]=people[loser]-change
               console.log(people[winner])
