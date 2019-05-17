@@ -2,38 +2,47 @@
 <html>
   <head>
     <title>Hey, this was done by Anthony</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="src/eloCalculator.js" type="text/javascript"></script>
 
   </head>
 
   <body>
-    <div id="app">
-      <table border="1">
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Elo</th>
-        </tr>
-        <tr v-for="({ person, elo }, rank) in infos">
-          <td>{{ rank + 1 }}</td>
-          <td>{{ person }}</td>
-          <td>{{ elo }}</td>
-        </tr>
-      </table>
+    <div class="container">
+      <h1 class="display-1">Chess Ladder</h1>
+      <div class="row">
+        <div id="ruleset1">
+          <div class="col">
+            <h2>Example Ruleset</h2>
+            <table class="table">
+              <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Elo</th>
+              </tr>
+              <tr v-for="({ person, elo }, rank) in infos">
+                <td>{{ rank + 1 }}</td>
+                <td>{{ person }}</td>
+                <td>{{ elo }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 
   <script>
     const app = new Vue({
-      el: '#app',
+      el: '#ruleset1',
       data: {
         infos: []
       },
       methods: {
       },
       mounted: function() {
-        fetch('matches.txt')
+        fetch('data/ruleset1.txt')
           .then(response => response.text())
           .then(txt => {
             const people = {};
