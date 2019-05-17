@@ -5,71 +5,27 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
     <script src="src/eloCalculator.js" type="text/javascript"></script>
+    <script src="src/leaderboard.js" type="text/javascript"></script>
 
   </head>
 
   <body>
-    <div class="container">
+    <div class="container" id="app">
       <h1 class="display-1">Chess Ladder</h1>
       <div class="row">
-        <div id="ruleset1">
-          <div class="col">
-            <h2>Example Ruleset</h2>
-            <table class="table">
-              <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Elo</th>
-              </tr>
-              <tr v-for="({ person, elo }, rank) in infos">
-                <td>{{ rank + 1 }}</td>
-                <td>{{ person }}</td>
-                <td>{{ elo }}</td>
-              </tr>
-            </table>
-          </div>
-        </div>
+        <leaderboard ruleset="ruleset1"></leaderboard>
+        <leaderboard ruleset="ruleset2"></leaderboard>
+        <leaderboard ruleset="ruleset3"></leaderboard>
       </div>
     </div>
   </body>
 
   <script>
-    const app = new Vue({
-      el: '#ruleset1',
+    new Vue({
+      el: '#app',
       data: {
-        infos: []
       },
       methods: {
-      },
-      mounted: function() {
-        fetch('data/ruleset1.txt')
-          .then(response => response.text())
-          .then(txt => {
-            const people = {};
-            const rawFile = txt.split("\n");
-            for (var i = 1; i < rawFile.length-1; i++) {
-              line = rawFile[i];
-              match = line.split(",");
-              white = match[0];
-              black = match[1];
-              outcome = match[2];
-
-              //add people to array if needed
-              if (!(white in people)){
-                people[white] = 1000;
-              }
-              if (!(black in people)){
-                people[black] = 1000;
-              }
-              result = eloCalc(people[white],people[black],outcome)
-              people[white] = result[0]
-              people[black] = result[1]
-            }
-
-            this.infos = Object.keys(people)
-              .map(person => ({ person, elo: people[person] }))
-              .sort((a, b) => b.elo - a.elo);
-          });
       }
     });
   </script>
