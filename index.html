@@ -41,25 +41,20 @@
             for (var i = 1; i < rawFile.length-1; i++) {
               line = rawFile[i];
               match = line.split(",");
-              winner = match[0];
-              loser = match[1];
-              tie = match[2];
-              if(tie){
-                console.log("zzzzzzzzzzzzzzzzzzzz");
-              }
-              //add people to array if needed
-              if (!(winner in people)){
-                people[winner] = 1000;
-              }
-              if (!(loser in people)){
-                people[loser] = 1000;
-              }
+              white = match[0];
+              black = match[1];
+              outcome = match[2];
 
-              change = eloCalc(people[winner],people[loser],tie)
-              people[winner]=people[winner]+change
-              people[loser]=people[loser]-change
-              console.log(people[winner])
-              console.log(change)
+              //add people to array if needed
+              if (!(white in people)){
+                people[white] = 1000;
+              }
+              if (!(black in people)){
+                people[black] = 1000;
+              }
+              result = eloCalc(people[white],people[black],outcome)
+              people[white] = result[0]
+              people[black] = result[1]
             }
 
             this.infos = Object.keys(people)

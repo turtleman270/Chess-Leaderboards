@@ -3,8 +3,13 @@
 ## How to use it
 After each match, add the results to the bottom of matches.txt
 
-If Alice beats Bob you would add:
-Alice,Bob
+If Alice(playig white) beats Bob(playing black) you would add:
+Alice,Bob,white
+
+If Alice(playig black) beats Bob(playing white) you would add:
+Bob,Alice,black
+
+
 
 If Alice ties Bob you would add:
 Alice,Bob,tie
