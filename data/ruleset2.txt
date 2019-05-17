@@ -1,0 +1,6 @@
+White,Black,winner
+Anthony,Mark,white
+Nic,Anthony,white
+Nic,Mark,white
+Mark,Don,black
+Don,Anthony,tie
