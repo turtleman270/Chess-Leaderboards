@@ -15,4 +15,4 @@ If Alice ties Bob you would add:
 Alice,Bob,tie
 
 ## How to view elo chart
-Go to turtleman270.github.io
+ Go to turtleman270.github.io
