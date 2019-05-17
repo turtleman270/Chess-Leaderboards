@@ -24,7 +24,10 @@ Vue.component('leaderboard', {
           </tr>
         </tbody>
       </table>
-    </div>`,
+      <div id="chartContainer" style="min-width: 310px; height: 400px;"></div>
+
+    </div>
+    `,
   mounted: function() {
     fetch(`data/${this.ruleset}.txt`)
       .then(response => response.text())
@@ -52,6 +55,58 @@ Vue.component('leaderboard', {
         this.infos = Object.keys(people)
           .map(person => ({ person, elo: people[person] }))
           .sort((a, b) => b.elo - a.elo);
+          console.log(this.infos)
+          console.log(people)
+        chartData = []
+        for(person in people){
+        var player = {
+          name: person,
+          y:people[person]
+        };
+        chartData.push(player)
+        }
+        Highcharts.chart('chartContainer', {
+          chart: {
+              type: 'column'
+          },
+          title: {
+              text: 'Players'
+          },
+          subtitle: {
+              text: 'These are people who play chess'
+          },
+          xAxis: {
+              type: 'category'
+          },
+          yAxis: {
+              title: {
+                  text: 'Elo Rating'
+              }
+
+          },
+          legend: {
+              enabled: false
+          },
+          plotOptions: {
+              series: {
+                  borderWidth: 0,
+                  dataLabels: {
+                      enabled: true,
+                      format: '{point.y:.1f}'
+                  }
+              }
+          },
+
+          series: [
+              {
+                  name: "Players",
+                  colorByPoint: true,
+                  data: chartData
+              }
+          ]
+        });
+
+
       });
     }
 });
