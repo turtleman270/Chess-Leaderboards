@@ -64,6 +64,7 @@ Vue.component('leaderboard', {
         }
         Highcharts.chart(`${this.ruleset}`, {
           chart: {
+              zoomType: 'y',
               type: 'column'
           },
           title: {
