@@ -24,11 +24,10 @@ Vue.component('leaderboard', {
           </tr>
         </tbody>
       </table>
-      <div id="chartContainer" style="min-width: 310px; height: 400px;"></div>
+      <div :id="ruleset" style="min-width: 310px; height: 400px;"></div>
 
-    </div>
-    `,
-  mounted: function() {
+    </div>`,
+  mounted: function(c) {
     fetch(`data/${this.ruleset}.txt`)
       .then(response => response.text())
       .then(txt => {
@@ -55,17 +54,15 @@ Vue.component('leaderboard', {
         this.infos = Object.keys(people)
           .map(person => ({ person, elo: people[person] }))
           .sort((a, b) => b.elo - a.elo);
-          console.log(this.infos)
-          console.log(people)
         chartData = []
-        for(person in people){
+        for(info in this.infos){
         var player = {
-          name: person,
-          y:people[person]
+          name: this.infos[info].person,
+          y: this.infos[info].elo
         };
         chartData.push(player)
         }
-        Highcharts.chart('chartContainer', {
+        Highcharts.chart(`${this.ruleset}`, {
           chart: {
               type: 'column'
           },
@@ -92,7 +89,7 @@ Vue.component('leaderboard', {
                   borderWidth: 0,
                   dataLabels: {
                       enabled: true,
-                      format: '{point.y:.1f}'
+                      format: '{point.y:.0f}'
                   }
               }
           },
