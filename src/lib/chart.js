@@ -1,19 +1,31 @@
 import Highcharts from 'highcharts';
+import Exporting from 'highcharts/modules/exporting';
+import ExportData from 'highcharts/modules/export-data';
+
+// Initialize exporting module.
+Exporting(Highcharts);
+ExportData(Highcharts);
 
 export function createChart(ruleset, chartData) {
   Highcharts.chart(ruleset, {
     chart: {
         zoomType: 'y',
-        type: 'column'
+        type: 'column',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        spacingBottom: 30
     },
     title: {
-        text: 'Players'
+        text: ruleset
     },
     subtitle: {
         text: 'These are people who play chess'
     },
     xAxis: {
-        type: 'category'
+        type: 'category',
+        title:{
+          text: 'Name'
+        }
     },
     yAxis: {
         title: {
@@ -36,10 +48,15 @@ export function createChart(ruleset, chartData) {
 
     series: [
         {
-            name: "Players",
+            name: "Elo rating",
             colorByPoint: true,
             data: chartData
         }
-    ]
+    ],
+
+    exporting: {
+        showTable: true,
+        tableCaption: false
+    }
   });
 }

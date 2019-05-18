@@ -1,22 +1,5 @@
 <template>
   <div class="col">
-    <h2>{{ ruleset }}</h2>
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Elo</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="({ person, elo }, rank) in infos" :key="person">
-          <td>{{ rank + 1 }}</td>
-          <td>{{ person }}</td>
-          <td>{{ elo }}</td>
-        </tr>
-      </tbody>
-    </table>
     <div :id="ruleset" style="min-width: 310px; height: 400px;"></div>
   </div>
 </template>
