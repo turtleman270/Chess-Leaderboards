@@ -25,4 +25,7 @@ function eloCalc(white, black, outcome){
   }
   return "Well something went wrong...."
 }
-module.exports = eloCalc;
+
+module.exports = {
+  eloCalc
+};
