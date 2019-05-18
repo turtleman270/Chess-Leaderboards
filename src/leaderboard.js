@@ -36,14 +36,12 @@ Vue.component('leaderboard', {
         this.infos = Object.keys(people)
           .map(person => ({ person, elo: people[person] }))
           .sort((a, b) => b.elo - a.elo);
-        chartData = []
-        for(info in this.infos){
-        var player = {
-          name: this.infos[info].person,
-          y: this.infos[info].elo
-        };
-        chartData.push(player)
-        }
+
+        const chartData = this.infos.map(({ person, elo }) => ({
+          name: person,
+          y: elo
+        }));
+
         Highcharts.chart(`${this.ruleset}`, {
           chart: {
               zoomType: 'y',
