@@ -1,18 +1,14 @@
 # Elo Calculator
 
-## How to use it
-After each match, add the results to the bottom of matches.txt
+### How to use it
+In the data folder, update ruleset.txt  
+An example:
+<pre>
+White,Black,winner    | This is the name of the columns
+Alice,Bob,white       | Alice was white, Bob black, and Alice won
+Bob,Alice,black       | Bob was black, Alice white, and Alice won
+Alice,Bob,tie         | Alice was white, Bob black, and they tied
+</pre>
 
-If Alice(playig white) beats Bob(playing black) you would add:
-Alice,Bob,white
-
-If Alice(playig black) beats Bob(playing white) you would add:
-Bob,Alice,black
-
-
-
-If Alice ties Bob you would add:
-Alice,Bob,tie
-
-## How to view elo chart
-Go to turtleman270.github.io
+### How to view elo chart
+Go to https://chesselo.netlify.com/
