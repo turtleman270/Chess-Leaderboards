@@ -27,7 +27,7 @@ Vue.component('leaderboard', {
       <div :id="ruleset" style="min-width: 310px; height: 400px;"></div>
 
     </div>`,
-  mounted: function(c) {
+  mounted: function() {
     fetch(`data/${this.ruleset}.txt`)
       .then(response => response.text())
       .then(txt => {
@@ -42,49 +42,7 @@ Vue.component('leaderboard', {
           y: elo
         }));
 
-        Highcharts.chart(`${this.ruleset}`, {
-          chart: {
-              zoomType: 'y',
-              type: 'column'
-          },
-          title: {
-              text: 'Players'
-          },
-          subtitle: {
-              text: 'These are people who play chess'
-          },
-          xAxis: {
-              type: 'category'
-          },
-          yAxis: {
-              title: {
-                  text: 'Elo Rating'
-              }
-
-          },
-          legend: {
-              enabled: false
-          },
-          plotOptions: {
-              series: {
-                  borderWidth: 0,
-                  dataLabels: {
-                      enabled: true,
-                      format: '{point.y:.0f}'
-                  }
-              }
-          },
-
-          series: [
-              {
-                  name: "Players",
-                  colorByPoint: true,
-                  data: chartData
-              }
-          ]
-        });
-
-
+        createChart(this.ruleset, chartData);
       });
     }
 });
