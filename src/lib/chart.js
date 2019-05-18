@@ -1,4 +1,6 @@
-function createChart(ruleset, chartData) {
+import Highcharts from 'highcharts';
+
+export function createChart(ruleset, chartData) {
   Highcharts.chart(ruleset, {
     chart: {
         zoomType: 'y',

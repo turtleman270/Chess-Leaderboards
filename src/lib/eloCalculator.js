@@ -2,7 +2,8 @@ function calculateEloChange(winner, loser) {
   return 20/(1+Math.pow(10,((winner-loser)/400)));
 }
 
-function eloCalc(white, black, outcome){
+export function eloCalc(white, black, outcome){
+  let change;
   if(outcome=="black"){
     change = calculateEloChange(black, white);
     return [white-change, black+change];
@@ -15,9 +16,9 @@ function eloCalc(white, black, outcome){
     if(white==black){
       return[white, black]
     }
-    e1 = calculateEloChange(white, black);
-    e2 = calculateEloChange(black, white);
-    expected = Math.max(e1,e2) - Math.min(e1,e2);
+    const e1 = calculateEloChange(white, black);
+    const e2 = calculateEloChange(black, white);
+    let expected = Math.max(e1,e2) - Math.min(e1,e2);
     expected /= 2;
 
     if(white>black){
@@ -31,7 +32,7 @@ function eloCalc(white, black, outcome){
   throw new Error("Well something went wrong....");
 }
 
-function calculateAllElo(txt) {
+export function calculateAllElo(txt) {
   return txt.trim().split("\n").slice(1)
     .reduce(
       (people, line) => {
@@ -48,8 +49,3 @@ function calculateAllElo(txt) {
       {}
     );
 }
-
-module.exports = {
-  eloCalc,
-  calculateAllElo
-};
