@@ -31,25 +31,7 @@ Vue.component('leaderboard', {
     fetch(`data/${this.ruleset}.txt`)
       .then(response => response.text())
       .then(txt => {
-        const people = {};
-        const rawFile = txt.split("\n");
-        for (var i = 1; i < rawFile.length-1; i++) {
-          line = rawFile[i];
-          match = line.split(",");
-          white = match[0];
-          black = match[1];
-          outcome = match[2];
-          //add people to array if needed
-          if (!(white in people)){
-            people[white] = 1000;
-          }
-          if (!(black in people)){
-            people[black] = 1000;
-          }
-          result = eloCalc(people[white],people[black],outcome)
-          people[white] = result[0]
-          people[black] = result[1]
-        }
+        const people = calculateAllElo(txt);
 
         this.infos = Object.keys(people)
           .map(person => ({ person, elo: people[person] }))
