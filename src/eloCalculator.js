@@ -24,10 +24,11 @@ function eloCalc(white, black, outcome){
       return [white-expected, black+expected]
     }
     if(white<black){
-        return [white+expected, black-expected]
+      return [white+expected, black-expected]
     }
   }
-  return "Well something went wrong...."
+
+  throw new Error("Well something went wrong....");
 }
 
 function calculateAllElo(txt) {
