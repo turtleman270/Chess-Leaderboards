@@ -1,18 +1,22 @@
+function calculateEloChange(winner, loser) {
+  return 20/(1+Math.pow(10,((winner-loser)/400)));
+}
+
 function eloCalc(white, black, outcome){
   if(outcome=="black"){
-    change = 20/(1+Math.pow(10,((black-white)/400)))
+    change = calculateEloChange(black, white);
     return [white-change, black+change];
   }
   if(outcome=="white"){
-    change = 20/(1+Math.pow(10,((white-black)/400)))
+    change = calculateEloChange(white, black);
     return [white+change, black-change]
   }
   if(outcome=="tie"){
     if(white==black){
       return[white, black]
     }
-    e1 = 20/(1+Math.pow(10,((white-black)/400)))
-    e2 = 20/(1+Math.pow(10,((black-white)/400)))
+    e1 = calculateEloChange(white, black);
+    e2 = calculateEloChange(black, white);
     expected = Math.max(e1,e2) - Math.min(e1,e2);
     expected /= 2;
 
