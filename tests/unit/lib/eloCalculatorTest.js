@@ -1,5 +1,6 @@
-const expect = require('chai').expect;
-var { eloCalc } = require('../src/eloCalculator.js');
+import { expect } from 'chai';
+import { eloCalc } from '../../../src/lib/eloCalculator';
+
 describe('calculate elo', function () {
 
   it('same elo tie no change', function () {
