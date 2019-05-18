@@ -27,27 +27,21 @@ function eloCalc(white, black, outcome){
 }
 
 function calculateAllElo(txt) {
-  const people = {};
-  const rawFile = txt.split("\n");
-  for (var i = 1; i < rawFile.length-1; i++) {
-    line = rawFile[i];
-    match = line.split(",");
-    white = match[0];
-    black = match[1];
-    outcome = match[2];
-    //add people to array if needed
-    if (!(white in people)){
-      people[white] = 1000;
-    }
-    if (!(black in people)){
-      people[black] = 1000;
-    }
-    result = eloCalc(people[white],people[black],outcome)
-    people[white] = result[0]
-    people[black] = result[1]
-  }
-
-  return people;
+  return txt.trim().split("\n").slice(1)
+    .reduce(
+      (people, line) => {
+        const [white, black, outcome] = line.split(",");
+        const result = eloCalc(
+          people[white] || 1000,
+          people[black] || 1000,
+          outcome
+        );
+        people[white] = result[0];
+        people[black] = result[1];
+        return people;
+      },
+      {}
+    );
 }
 
 module.exports = {
