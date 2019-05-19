@@ -1,12 +1,18 @@
 <template>
   <div class="col">
-    <div :id="ruleset" style="min-width: 310px; height: 400px;"></div>
+    <div :id="ruleset + '-bar'" style="min-width: 310px; height: 400px;"></div>
+    <div :id="ruleset + '-line'" style="min-width: 310px; height: 400px;"></div>
   </div>
 </template>
 
 <script>
-  import { calculateAllElo } from '../lib/eloCalculator';
-  import { createChart } from '../lib/barChart';
+  import { calculateAllElo, calculateEloOverTime } from '../lib/eloCalculator';
+  import {
+    createBarChartData,
+    createBarChart,
+    createLineChartData,
+    createLineChart
+  } from '../lib/charts';
 
   export default {
     name: 'Leaderboard',
@@ -14,26 +20,19 @@
       ruleset: String
     },
     data: function() {
-      return {
-        infos: []
-      }
+      return {}
     },
     mounted: function() {
       fetch(`data/${this.ruleset}.txt`)
         .then(response => response.text())
         .then(txt => {
-          const people = calculateAllElo(txt);
+          const allElo = calculateAllElo(txt);
+          const allEloData = createBarChartData(allElo);
+          createBarChart(this.ruleset, allEloData);
 
-          this.infos = Object.keys(people)
-            .map(person => ({ person, elo: people[person] }))
-            .sort((a, b) => b.elo - a.elo);
-
-          const chartData = this.infos.map(({ person, elo }) => ({
-            name: person,
-            y: elo
-          }));
-
-          createChart(this.ruleset, chartData);
+          const eloOverTime = calculateEloOverTime(txt);
+          const eloOverTimeData = createLineChartData(eloOverTime)
+          createLineChart(this.ruleset, eloOverTimeData);
         });
       }
   }
