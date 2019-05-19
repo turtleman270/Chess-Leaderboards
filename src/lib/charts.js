@@ -1,10 +1,12 @@
 import Highcharts from 'highcharts';
 import Exporting from 'highcharts/modules/exporting';
 import ExportData from 'highcharts/modules/export-data';
+import Accessibility from 'highcharts/modules/accessibility';
 
 // Initialize exporting module.
 Exporting(Highcharts);
 ExportData(Highcharts);
+Accessibility(Highcharts);
 
 export function createBarChartData(allElo) {
   return Object.keys(allElo)
@@ -25,6 +27,9 @@ export function createBarChart(ruleset, chartData) {
         borderWidth: 1,
         borderColor: '#ccc',
         spacingBottom: 30
+    },
+    accessibility: {
+      description: 'Bar graph showing players current elo scores.'
     },
     title: {
         text: ruleset
@@ -69,7 +74,7 @@ export function createBarChart(ruleset, chartData) {
     ],
 
     exporting: {
-        showTable: true,
+        showTable: false,
         tableCaption: false
     }
   });
@@ -94,6 +99,9 @@ export function createLineChart(ruleset, chartData) {
         borderWidth: 1,
         borderColor: '#ccc',
         spacingBottom: 30
+    },
+    accessibility: {
+      description: 'Line graph showing how players elos fluctuate over time.'
     },
     title: {
         text: ruleset
