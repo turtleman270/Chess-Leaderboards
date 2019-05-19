@@ -7,7 +7,6 @@ Exporting(Highcharts);
 ExportData(Highcharts);
 
 export function createChart(ruleset, chartData) {
-  console.log(chartData);
 
   Highcharts.chart(ruleset, {
     chart: {

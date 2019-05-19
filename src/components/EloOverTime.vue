@@ -23,12 +23,9 @@
       fetch(`data/${this.ruleset}.txt`)
         .then(response => response.text())
         .then(txt => {
-          const people = calculateAllElo(txt);
-          const people2 = calculateEloOverTime(txt);
-          //console.log(people);
-          //console.log(people2);
-          this.infos = Object.keys(people2)
-            .map(person => ({ person, elo: people2[person] }));
+          const people = calculateEloOverTime(txt);
+          this.infos = Object.keys(people)
+            .map(person => ({ person, elo: people[person] }));
 
           const chartData = this.infos.map(({ person, elo }) => ({
             name: person,

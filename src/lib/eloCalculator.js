@@ -18,8 +18,7 @@ export function eloCalc(white, black, outcome){
     }
     const e1 = calculateEloChange(white, black);
     const e2 = calculateEloChange(black, white);
-    let expected = Math.max(e1,e2) - Math.min(e1,e2);
-    expected /= 2;
+    const expected = (Math.max(e1,e2) - Math.min(e1,e2))/2;
 
     if(white>black){
       return [white-expected, black+expected]
@@ -29,7 +28,7 @@ export function eloCalc(white, black, outcome){
     }
   }
 
-  throw new Error("Well something went wrong....");
+  throw new Error("Error calculating elo. Check that your outcome is one of white, black, or tie.");
 }
 
 export function calculateAllElo(txt) {
@@ -52,26 +51,24 @@ export function calculateAllElo(txt) {
 
 
 export function calculateEloOverTime(txt) {
-  txt = txt.trim().split("\n").slice(1)
-  var allCurrentElos = []
-  var elosAllTime = []
-  txt.forEach(function(line){
-    const [white, black, outcome, year, month, day] = line.split(",");
-    console.log(white+" "+black+" "+outcome+" "+year+" "+month+" "+day);
-    const result = eloCalc(
-      allCurrentElos[white] || 1000,
-      allCurrentElos[black] || 1000,
-      outcome
+  var currentElo = []
+  return txt.trim().split("\n").slice(1)
+    .reduce(
+      (elosAllTime, line) => {
+        const [white, black, outcome, year, month, day] = line.split(",");
+        const result = eloCalc(
+          currentElo[white] || 1000,
+          currentElo[black] || 1000,
+          outcome
+        );
+        currentElo[white] = result[0];
+        currentElo[black] = result[1];
+        elosAllTime[white] = elosAllTime[white] || [];
+        elosAllTime[black] = elosAllTime[black] || [];
+        elosAllTime[white].push([Date.UTC(year, month, day),result[0]]);
+        elosAllTime[black].push([Date.UTC(year, month, day),result[1]]);
+        return elosAllTime;
+      },
+      {}
     );
-    allCurrentElos[white] = result[0];
-    allCurrentElos[black] = result[1];
-    //console.log(white+" "+black)
-    elosAllTime[white] = elosAllTime[white] || [];
-    elosAllTime[black] = elosAllTime[black] || [];
-    elosAllTime[white].push([Date.UTC(year, month, day),result[0]]);
-    elosAllTime[black].push([Date.UTC(year, month, day),result[1]]);
-    //console.log(elosAllTime);
-  });
-  return elosAllTime;
-
 }
