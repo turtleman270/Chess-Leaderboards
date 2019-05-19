@@ -33,6 +33,9 @@ export function createChart(ruleset, chartData) {
         }
 
     },
+    tooltip: {
+      valueDecimals: 1
+    },
     legend: {
         enabled: false
     },

@@ -5,7 +5,6 @@
 </template>
 
 <script>
-  import { calculateAllElo } from '../lib/eloCalculator';
   import { calculateEloOverTime } from '../lib/eloCalculator';
   import { createChart } from '../lib/lineChart';
 
@@ -31,7 +30,6 @@
             name: person,
             data: elo
           }));
-          console.log(chartData)
 
           createChart(this.ruleset, chartData);
         });

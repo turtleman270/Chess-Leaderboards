@@ -10,7 +10,7 @@ export function createChart(ruleset, chartData) {
 
   Highcharts.chart(ruleset, {
     chart: {
-        zoomType: 'y',
+        zoomType: 'x',
         type: 'line',
         borderWidth: 1,
         borderColor: '#ccc',
@@ -34,6 +34,9 @@ export function createChart(ruleset, chartData) {
         }
 
     },
+    tooltip: {
+      valueDecimals: 1
+    },
     legend: {
         layout: 'vertical',
         align: 'right',
@@ -43,8 +46,7 @@ export function createChart(ruleset, chartData) {
         series: {
             borderWidth: 0,
             dataLabels: {
-                enabled: true,
-                format: '{point.y:.0f}'
+                enabled: false
             }
         }
     },
