@@ -6,6 +6,17 @@ import ExportData from 'highcharts/modules/export-data';
 Exporting(Highcharts);
 ExportData(Highcharts);
 
+export function createBarChartData(allElo) {
+  return Object.keys(allElo)
+    .map(person => ({ person, elo: allElo[person] }))
+    .sort((a, b) => b.elo - a.elo)
+    .map(({ person, elo }) => ({
+      name: person,
+      y: elo
+    }
+  ));
+}
+
 export function createBarChart(ruleset, chartData) {
   Highcharts.chart(`${ruleset}-bar`, {
     chart: {
@@ -62,6 +73,16 @@ export function createBarChart(ruleset, chartData) {
         tableCaption: false
     }
   });
+}
+
+export function createLineChartData(eloOverTime) {
+  return Object.keys(eloOverTime)
+    .map(person => ({ person, elo: eloOverTime[person] }))
+    .map(({ person, elo }) => ({
+      name: person,
+      data: elo
+    }
+  ));
 }
 
 export function createLineChart(ruleset, chartData) {

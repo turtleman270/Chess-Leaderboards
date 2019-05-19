@@ -7,7 +7,12 @@
 
 <script>
   import { calculateAllElo, calculateEloOverTime } from '../lib/eloCalculator';
-  import { createBarChart, createLineChart } from '../lib/charts';
+  import {
+    createBarChartData,
+    createBarChart,
+    createLineChartData,
+    createLineChart
+  } from '../lib/charts';
 
   export default {
     name: 'Leaderboard',
@@ -22,32 +27,11 @@
         .then(response => response.text())
         .then(txt => {
           const allElo = calculateAllElo(txt);
-
-          this.infos = Object.keys(allElo)
-            .map(person => ({ person, elo: allElo[person] }))
-            .sort((a, b) => b.elo - a.elo);
-
-          const allEloData = Object.keys(allElo)
-            .map(person => ({ person, elo: allElo[person] }))
-            .sort((a, b) => b.elo - a.elo)
-            .map(({ person, elo }) => ({
-              name: person,
-              y: elo
-            }
-          ));
-
+          const allEloData = createBarChartData(allElo);
           createBarChart(this.ruleset, allEloData);
 
           const eloOverTime = calculateEloOverTime(txt);
-
-          const eloOverTimeData = Object.keys(eloOverTime)
-            .map(person => ({ person, elo: eloOverTime[person] }))
-            .map(({ person, elo }) => ({
-              name: person,
-              data: elo
-            }
-          ));
-
+          const eloOverTimeData = createLineChartData(eloOverTime)
           createLineChart(this.ruleset, eloOverTimeData);
         });
       }
