@@ -1,12 +1,13 @@
 <template>
   <div class="col">
-    <div :id="ruleset" style="min-width: 310px; height: 400px;"></div>
+    <div :id="ruleset + '-bar'" style="min-width: 310px; height: 400px;"></div>
+    <div :id="ruleset + '-line'" style="min-width: 310px; height: 400px;"></div>
   </div>
 </template>
 
 <script>
-  import { calculateAllElo } from '../lib/eloCalculator';
-  import { createChart } from '../lib/barChart';
+  import { calculateAllElo, calculateEloOverTime } from '../lib/eloCalculator';
+  import { createBarChart, createLineChart } from '../lib/charts';
 
   export default {
     name: 'Leaderboard',
@@ -14,26 +15,40 @@
       ruleset: String
     },
     data: function() {
-      return {
-        infos: []
-      }
+      return {}
     },
     mounted: function() {
       fetch(`data/${this.ruleset}.txt`)
         .then(response => response.text())
         .then(txt => {
-          const people = calculateAllElo(txt);
+          const allElo = calculateAllElo(txt);
 
-          this.infos = Object.keys(people)
-            .map(person => ({ person, elo: people[person] }))
+          this.infos = Object.keys(allElo)
+            .map(person => ({ person, elo: allElo[person] }))
             .sort((a, b) => b.elo - a.elo);
 
-          const chartData = this.infos.map(({ person, elo }) => ({
-            name: person,
-            y: elo
-          }));
+          const allEloData = Object.keys(allElo)
+            .map(person => ({ person, elo: allElo[person] }))
+            .sort((a, b) => b.elo - a.elo)
+            .map(({ person, elo }) => ({
+              name: person,
+              y: elo
+            }
+          ));
 
-          createChart(this.ruleset, chartData);
+          createBarChart(this.ruleset, allEloData);
+
+          const eloOverTime = calculateEloOverTime(txt);
+
+          const eloOverTimeData = Object.keys(eloOverTime)
+            .map(person => ({ person, elo: eloOverTime[person] }))
+            .map(({ person, elo }) => ({
+              name: person,
+              data: elo
+            }
+          ));
+
+          createLineChart(this.ruleset, eloOverTimeData);
         });
       }
   }

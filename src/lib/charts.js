@@ -6,8 +6,8 @@ import ExportData from 'highcharts/modules/export-data';
 Exporting(Highcharts);
 ExportData(Highcharts);
 
-export function createChart(ruleset, chartData) {
-  Highcharts.chart(ruleset, {
+export function createBarChart(ruleset, chartData) {
+  Highcharts.chart(`${ruleset}-bar`, {
     chart: {
         zoomType: 'y',
         type: 'column',
@@ -59,6 +59,60 @@ export function createChart(ruleset, chartData) {
 
     exporting: {
         showTable: true,
+        tableCaption: false
+    }
+  });
+}
+
+export function createLineChart(ruleset, chartData) {
+
+  Highcharts.chart(`${ruleset}-line`, {
+    chart: {
+        zoomType: 'x',
+        type: 'line',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        spacingBottom: 30
+    },
+    title: {
+        text: ruleset
+    },
+    subtitle: {
+        text: 'These are people who play chess'
+    },
+    xAxis: {
+      type: 'datetime',
+      title: {
+          text: 'Date'
+      }
+    },
+    yAxis: {
+        title: {
+          text: 'Elo Rating'
+        }
+
+    },
+    tooltip: {
+      valueDecimals: 1
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: false
+            }
+        }
+    },
+
+    series: chartData,
+
+    exporting: {
+        showTable: false,
         tableCaption: false
     }
   });
