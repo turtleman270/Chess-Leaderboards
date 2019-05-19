@@ -69,7 +69,7 @@ export function createBarChart(ruleset, chartData) {
     ],
 
     exporting: {
-        showTable: true,
+        showTable: false,
         tableCaption: false
     }
   });

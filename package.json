@@ -15,9 +15,11 @@
   },
   "main": "test.js",
   "dependencies": {
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "core-js": "^2.6.5",
     "highcharts": "^7.1.1",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-nav-tabs": "^0.5.7"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",
