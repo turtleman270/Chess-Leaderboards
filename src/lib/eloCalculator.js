@@ -49,3 +49,29 @@ export function calculateAllElo(txt) {
       {}
     );
 }
+
+
+export function calculateEloOverTime(txt) {
+  txt = txt.trim().split("\n").slice(1)
+  var allCurrentElos = []
+  var elosAllTime = []
+  txt.forEach(function(line){
+    const [white, black, outcome, year, month, day] = line.split(",");
+    console.log(white+" "+black+" "+outcome+" "+year+" "+month+" "+day);
+    const result = eloCalc(
+      allCurrentElos[white] || 1000,
+      allCurrentElos[black] || 1000,
+      outcome
+    );
+    allCurrentElos[white] = result[0];
+    allCurrentElos[black] = result[1];
+    //console.log(white+" "+black)
+    elosAllTime[white] = elosAllTime[white] || [];
+    elosAllTime[black] = elosAllTime[black] || [];
+    elosAllTime[white].push([Date.UTC(year, month, day),result[0]]);
+    elosAllTime[black].push([Date.UTC(year, month, day),result[1]]);
+    //console.log(elosAllTime);
+  });
+  return elosAllTime;
+
+}

@@ -6,10 +6,11 @@
 
 <script>
   import { calculateAllElo } from '../lib/eloCalculator';
-  import { createChart } from '../lib/barChart';
+  import { calculateEloOverTime } from '../lib/eloCalculator';
+  import { createChart } from '../lib/lineChart';
 
   export default {
-    name: 'Leaderboard',
+    name: 'EloOverTime',
     props: {
       ruleset: String
     },
@@ -23,15 +24,17 @@
         .then(response => response.text())
         .then(txt => {
           const people = calculateAllElo(txt);
-
-          this.infos = Object.keys(people)
-            .map(person => ({ person, elo: people[person] }))
-            .sort((a, b) => b.elo - a.elo);
+          const people2 = calculateEloOverTime(txt);
+          //console.log(people);
+          //console.log(people2);
+          this.infos = Object.keys(people2)
+            .map(person => ({ person, elo: people2[person] }));
 
           const chartData = this.infos.map(({ person, elo }) => ({
             name: person,
-            y: elo
+            data: elo
           }));
+          console.log(chartData)
 
           createChart(this.ruleset, chartData);
         });

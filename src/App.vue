@@ -5,6 +5,7 @@
       <leaderboard ruleset="ruleset1"></leaderboard>
       <leaderboard ruleset="ruleset2"></leaderboard>
       <leaderboard ruleset="ruleset3"></leaderboard>
+      <eloOverTime ruleset="withDate"></eloOverTime>
 
     </div>
   </div>
@@ -12,11 +13,12 @@
 
 <script>
   import Leaderboard from './components/Leaderboard';
-
+  import EloOverTime from './components/EloOverTime';
   export default {
     name: 'app',
     components: {
-      Leaderboard
+      Leaderboard,
+      EloOverTime
     }
   }
 </script>
