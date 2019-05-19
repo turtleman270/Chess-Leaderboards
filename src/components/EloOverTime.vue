@@ -5,11 +5,11 @@
 </template>
 
 <script>
-  import { calculateAllElo } from '../lib/eloCalculator';
-  import { createChart } from '../lib/barChart';
+  import { calculateEloOverTime } from '../lib/eloCalculator';
+  import { createChart } from '../lib/lineChart';
 
   export default {
-    name: 'Leaderboard',
+    name: 'EloOverTime',
     props: {
       ruleset: String
     },
@@ -22,15 +22,13 @@
       fetch(`data/${this.ruleset}.txt`)
         .then(response => response.text())
         .then(txt => {
-          const people = calculateAllElo(txt);
-
+          const people = calculateEloOverTime(txt);
           this.infos = Object.keys(people)
-            .map(person => ({ person, elo: people[person] }))
-            .sort((a, b) => b.elo - a.elo);
+            .map(person => ({ person, elo: people[person] }));
 
           const chartData = this.infos.map(({ person, elo }) => ({
             name: person,
-            y: elo
+            data: elo
           }));
 
           createChart(this.ruleset, chartData);

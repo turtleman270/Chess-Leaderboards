@@ -7,10 +7,11 @@ Exporting(Highcharts);
 ExportData(Highcharts);
 
 export function createChart(ruleset, chartData) {
+
   Highcharts.chart(ruleset, {
     chart: {
-        zoomType: 'y',
-        type: 'column',
+        zoomType: 'x',
+        type: 'line',
         borderWidth: 1,
         borderColor: '#ccc',
         spacingBottom: 30
@@ -22,10 +23,10 @@ export function createChart(ruleset, chartData) {
         text: 'These are people who play chess'
     },
     xAxis: {
-        type: 'category',
-        title:{
-          text: 'Name'
-        }
+      type: 'datetime',
+      title: {
+          text: 'Date'
+      }
     },
     yAxis: {
         title: {
@@ -33,29 +34,27 @@ export function createChart(ruleset, chartData) {
         }
 
     },
+    tooltip: {
+      valueDecimals: 1
+    },
     legend: {
-        enabled: false
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
     },
     plotOptions: {
         series: {
             borderWidth: 0,
             dataLabels: {
-                enabled: true,
-                format: '{point.y:.0f}'
+                enabled: false
             }
         }
     },
 
-    series: [
-        {
-            name: "Elo rating",
-            colorByPoint: true,
-            data: chartData
-        }
-    ],
+    series: chartData,
 
     exporting: {
-        showTable: true,
+        showTable: false,
         tableCaption: false
     }
   });
