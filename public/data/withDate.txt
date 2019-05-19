@@ -1,7 +1,7 @@
 White,Black,winner,yyyy,mm,dd
-Anthony,Mark,white,2019,02,14
-Sheran,Anthony,white,2019,03,01
-Sheran,Mark,white,2019,05,26
-Mark,Don,black,2019,05,26
-Don,Anthony,tie,2019,05,29
-Mark,John,white,2019,06,11
+Anthony,Mark,white,14 Feb 2019
+Sheran,Anthony,white,1 Mar 2019
+Sheran,Mark,white,26 May 2019
+Mark,Don,black,26 May 2019 13:00
+Don,Anthony,tie,29 May 2019 16:00
+Mark,John,white,11 June 2019

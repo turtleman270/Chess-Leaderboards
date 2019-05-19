@@ -55,7 +55,7 @@ export function calculateEloOverTime(txt) {
   return txt.trim().split("\n").slice(1)
     .reduce(
       (elosAllTime, line) => {
-        const [white, black, outcome, year, month, day] = line.split(",");
+        const [white, black, outcome, date] = line.split(",");
         const result = eloCalc(
           currentElo[white] || 1000,
           currentElo[black] || 1000,
@@ -65,8 +65,8 @@ export function calculateEloOverTime(txt) {
         currentElo[black] = result[1];
         elosAllTime[white] = elosAllTime[white] || [];
         elosAllTime[black] = elosAllTime[black] || [];
-        elosAllTime[white].push([Date.UTC(year, month, day),result[0]]);
-        elosAllTime[black].push([Date.UTC(year, month, day),result[1]]);
+        elosAllTime[white].push([Date.parse(date),result[0]]);
+        elosAllTime[black].push([Date.parse(date),result[1]]);
         return elosAllTime;
       },
       {}
