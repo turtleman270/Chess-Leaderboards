@@ -1,6 +1,6 @@
 <template>
-  <div class="col">
-    <div :id="ruleset + '-line'" style="min-width: 310px; height: 400px;"></div>
+  <div>
+    <div :id="title + '-line'" style="min-width: 310px; height: 400px;"></div>
 
     <table class="table table-striped table-bordered">
       <thead>
@@ -10,13 +10,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="({ person, elo }, rank) in infos" :key="person">
+        <tr v-for="({ person, elo }, rank) in infos" :key="rank">
           <td>{{ rank + 1 }}. {{ person }}</td>
           <td>{{ elo }}</td>
         </tr>
       </tbody>
     </table>
-
   </div>
 </template>
 
@@ -30,7 +29,14 @@
   export default {
     name: 'Leaderboard',
     props: {
-      ruleset: String
+      source: {
+        type: String,
+        required: true
+      },
+      title: {
+        type: String,
+        required: true
+      }
     },
     data: function() {
       return {
@@ -38,7 +44,7 @@
       }
     },
     mounted: function() {
-      fetch(`data/${this.ruleset}.txt`)
+      fetch(this.source)
         .then(response => response.text())
         .then(txt => {
           const people = calculateAllElo(txt);
@@ -48,7 +54,7 @@
 
           const eloOverTime = calculateEloOverTime(txt);
           const eloOverTimeData = createLineChartData(eloOverTime)
-          createLineChart(this.ruleset, eloOverTimeData);
+          createLineChart(this.title, eloOverTimeData);
         });
       }
   }
