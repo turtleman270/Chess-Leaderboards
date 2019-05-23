@@ -1,7 +1,1 @@
 White,Black,winner,dd-mmm-yyyy
-Anthony,Mark,black,14 Feb 2019
-Micky,Anthony,white,1 Mar 2019
-Micky,Mark,white,26 May 2019
-Mark,Don,black,26 May 2019 13:00
-Don,Anthony,tie,29 May 2019 16:00
-Mark,John,white,11 June 2019
