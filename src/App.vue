@@ -12,7 +12,7 @@
 <script>
   import Leaderboard from './components/Leaderboard';
 
-  const defaultRulesets = '5 Minutes + 5 Seconds,data/ruleset1.txt;5 Minutes + 0 Seconds,data/ruleset2.txt;15 Minutes + 10 Seconds,data/ruleset3.txt';
+  const defaultRulesets = '5 Minutes + 5 Seconds,data/5 min + 5 sec.txt;5 Minutes + 0 Seconds,data/5 min.txt;15 Minutes + 10 Seconds,data/15 min + 10 sec.txt';
 
   export default {
     name: 'app',
