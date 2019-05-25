@@ -1,5 +1,7 @@
 function calculateEloChange(winner, loser) {
-  return 20/(1+Math.pow(10,((winner-loser)/400)));
+  var CONFIG = require('../../configs.json');
+  const k = CONFIG.k;
+  return k/(1+Math.pow(10,((winner-loser)/400)));
 }
 
 export function eloCalc(white, black, outcome){
@@ -31,14 +33,14 @@ export function eloCalc(white, black, outcome){
   throw new Error("Error calculating elo. Check that your outcome is one of white, black, or tie.");
 }
 
-export function calculateAllElo(txt) {
+export function calculateAllElo(txt, startingElo) {
   return txt.trim().split("\n").slice(1)
     .reduce(
       (people, line) => {
         const [white, black, outcome] = line.split(",");
         const result = eloCalc(
-          people[white] || 1000,
-          people[black] || 1000,
+          people[white] || startingElo,
+          people[black] || startingElo,
           outcome
         );
         people[white] = result[0];
@@ -50,15 +52,15 @@ export function calculateAllElo(txt) {
 }
 
 
-export function calculateEloOverTime(txt) {
+export function calculateEloOverTime(txt, startingElo) {
   var currentElo = []
   return txt.trim().split("\n").slice(1)
     .reduce(
       (elosAllTime, line) => {
         const [white, black, outcome, date] = line.split(",");
         const result = eloCalc(
-          currentElo[white] || 1000,
-          currentElo[black] || 1000,
+          currentElo[white] || startingElo,
+          currentElo[black] || startingElo,
           outcome
         );
         currentElo[white] = result[0];

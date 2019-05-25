@@ -25,6 +25,9 @@
     createLineChartData,
     createLineChart
   } from '../lib/charts';
+  var CONFIG = require('../../configs.json');
+  const startingElo = CONFIG.startingElo;
+  const decimalPlaces = CONFIG.decimalPlaces;
 
   export default {
     name: 'Leaderboard',
@@ -47,12 +50,12 @@
       fetch(this.source)
         .then(response => response.text())
         .then(txt => {
-          const people = calculateAllElo(txt);
+          const people = calculateAllElo(txt, startingElo);
           this.infos = Object.keys(people)
-            .map(person => ({ person, elo: people[person].toFixed(1) }))
+            .map(person => ({ person, elo: people[person].toFixed(decimalPlaces) }))
             .sort((a, b) => b.elo - a.elo);
 
-          const eloOverTime = calculateEloOverTime(txt);
+          const eloOverTime = calculateEloOverTime(txt, startingElo);
           const eloOverTimeData = createLineChartData(eloOverTime)
           createLineChart(this.title, eloOverTimeData);
         });
