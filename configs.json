@@ -1,0 +1,7 @@
+{
+  "dataFolder": "./data/",
+  "filePaths": "5 min + 5 sec.txt,5 min.txt,15 min + 10 sec.txt",
+  "startingElo": 1000,
+  "k": 20,
+  "decimalPlaces": 1
+}

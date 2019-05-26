@@ -2,6 +2,7 @@ import Highcharts from 'highcharts';
 import Exporting from 'highcharts/modules/exporting';
 import ExportData from 'highcharts/modules/export-data';
 import Accessibility from 'highcharts/modules/accessibility';
+var CONFIG = require('../../configs.json');
 
 // Initialize exporting module.
 Exporting(Highcharts);
@@ -35,7 +36,7 @@ export function createLineChart(ruleset, chartData) {
         text: ruleset
     },
     subtitle: {
-        text: 'These are people who play chess'
+        text: 'Chess ratings over time'
     },
     xAxis: {
       type: 'datetime',
@@ -50,7 +51,7 @@ export function createLineChart(ruleset, chartData) {
 
     },
     tooltip: {
-      valueDecimals: 1
+      valueDecimals: CONFIG.decimalPlaces
     },
     legend: {
         layout: 'vertical',
