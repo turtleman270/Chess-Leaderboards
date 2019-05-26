@@ -2,3 +2,12 @@
   base    = "."
   publish = "dist"
   command = "npm run build"
+
+[[redirects]]
+  from = "/slackfile/*"
+  to = "https://files.slack.com/files-pri/T025EV233-FJZB1MFT9/fiveminutespluszeroseconds.txt"
+  status = 200
+  force = true
+  [redirects.headers]
+    X-From = "Netlify"
+    X-Api-Key = "some-api-key-string"
