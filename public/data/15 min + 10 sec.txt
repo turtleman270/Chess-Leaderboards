@@ -1,2 +1,3 @@
 White,Black,winner, day month year time
 Miles,Mark,tie, 31 May 2019 16:30
+Miles,Mark,white, 31 May 2019 17:50
