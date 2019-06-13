@@ -1,3 +1,6 @@
 White,Black,winner, day month year time
 Mark,Sheran,black, 24 May 2019 17:12
 Anthony,Sheran,tie, 24 May 2019 17:40
+Nicole,Mark,black, 13 June 2019 17:40
+Nicole,Mark,black, 13 June 2019 17:50
+Nicole,Anthony,black, 13 June 2019 18:00
